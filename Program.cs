@@ -35,6 +35,10 @@ builder.Services.AddScoped<ITaskItemRepository, TaskItemRepository>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<IPlanRepository, PlanRepository>();
 builder.Services.AddScoped<IPlanService, PlanService>();
+builder.Services.AddScoped<ITaskCompletionRepository, TaskCompletionRepository>();
+builder.Services.AddScoped<ITaskCompletionService, TaskCompletionService>();
+builder.Services.AddScoped<IDailyReportRepository, DailyReportRepository>();
+builder.Services.AddScoped<IDailyReportService, DailyReportService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

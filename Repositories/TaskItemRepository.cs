@@ -22,6 +22,10 @@ public class TaskItemRepository : ITaskItemRepository
     public Task<TaskItem?> GetByIdAsync(Guid goalId, Guid taskId) =>
         _db.Tasks.FirstOrDefaultAsync(t => t.Id == taskId && t.GoalId == goalId);
 
+    public Task<TaskItem?> GetOwnedAsync(Guid userId, Guid taskId) =>
+        _db.Tasks.Include(t => t.Goal)
+            .FirstOrDefaultAsync(t => t.Id == taskId && t.Goal.UserId == userId);
+
     public async Task AddAsync(TaskItem task) => await _db.Tasks.AddAsync(task);
 
     public void Remove(TaskItem task) => _db.Tasks.Remove(task);
