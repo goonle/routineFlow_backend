@@ -67,6 +67,8 @@ public class CalendarService : ICalendarService
                 {
                     GoalId = g.Id,
                     Name = g.Name,
+                    Icon = g.Icon,
+                    Emoji = GoalIconMetadata.Emoji(g.Icon),
                     Achieved = achievedSet.Contains((g.Id, date))
                 }).ToList()
             });

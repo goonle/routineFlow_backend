@@ -1,3 +1,5 @@
+using RoutineFlow.Models.Enums;
+
 namespace RoutineFlow.Models.Entities;
 
 public class Goal
@@ -6,6 +8,7 @@ public class Goal
     public Guid UserId { get; set; }
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
+    public GoalIcon Icon { get; set; } = GoalIcon.General;
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 

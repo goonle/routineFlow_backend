@@ -1,6 +1,7 @@
 using RoutineFlow.Common.Exceptions;
 using RoutineFlow.DTOs.Goals;
 using RoutineFlow.Models.Entities;
+using RoutineFlow.Models.Enums;
 using RoutineFlow.Repositories.Interfaces;
 using RoutineFlow.Services.Interfaces;
 
@@ -42,6 +43,7 @@ public class GoalService : IGoalService
             UserId = userId,
             Name = request.Name,
             Description = request.Description,
+            Icon = request.Icon,
             CreatedAt = now,
             UpdatedAt = now
         };
@@ -58,6 +60,7 @@ public class GoalService : IGoalService
 
         goal.Name = request.Name;
         goal.Description = request.Description;
+        goal.Icon = request.Icon;
         goal.UpdatedAt = DateTime.UtcNow;
 
         await _goalRepository.SaveChangesAsync();
@@ -108,6 +111,8 @@ public class GoalService : IGoalService
         Id = goal.Id,
         Name = goal.Name,
         Description = goal.Description,
+        Icon = goal.Icon,
+        Emoji = GoalIconMetadata.Emoji(goal.Icon),
         CreatedAt = goal.CreatedAt,
         UpdatedAt = goal.UpdatedAt,
         DeletedAt = goal.DeletedAt

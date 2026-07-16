@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RoutineFlow.Models.Entities;
+using RoutineFlow.Models.Enums;
 
 namespace RoutineFlow.Data.Configurations;
 
@@ -10,6 +11,7 @@ public class GoalConfiguration : IEntityTypeConfiguration<Goal>
     {
         builder.HasKey(g => g.Id);
         builder.Property(g => g.Name).IsRequired();
+        builder.Property(g => g.Icon).IsRequired().HasDefaultValue(GoalIcon.General);
         builder.HasIndex(g => g.UserId);
 
         builder.HasMany(g => g.Tasks)
