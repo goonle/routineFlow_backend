@@ -16,8 +16,14 @@ using RoutineFlow.Repositories;
 using RoutineFlow.Repositories.Interfaces;
 using RoutineFlow.Services;
 using RoutineFlow.Services.Interfaces;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext());
 
 // Add services to the container.
 
@@ -151,6 +157,8 @@ builder.Services.AddSwaggerGen(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseSerilogRequestLogging();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
