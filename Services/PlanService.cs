@@ -34,7 +34,6 @@ public class PlanService : IPlanService
     public async Task<PlanResponse> UpsertAsync(Guid userId, Guid goalId, UpsertPlanRequest request)
     {
         await EnsureActiveGoalOwnedAsync(userId, goalId);
-        Validate(request);
 
         var repeatCount = request.RepeatCount ?? 1;
         var now = DateTime.UtcNow;
@@ -81,31 +80,6 @@ public class PlanService : IPlanService
 
         _planRepository.Remove(plan);
         await _planRepository.SaveChangesAsync();
-    }
-
-    private static void Validate(UpsertPlanRequest request)
-    {
-        if (request.RepeatCount is < 1)
-        {
-            throw new ArgumentException("RepeatCount must be at least 1.");
-        }
-
-        if (request.Type == PlanType.Custom)
-        {
-            if (request.StartDate is null || request.EndDate is null)
-            {
-                throw new ArgumentException("Custom plans require both StartDate and EndDate.");
-            }
-
-            if (request.EndDate < request.StartDate)
-            {
-                throw new ArgumentException("EndDate must be on or after StartDate.");
-            }
-        }
-        else if (request.StartDate is not null || request.EndDate is not null)
-        {
-            throw new ArgumentException("StartDate/EndDate are only valid for Custom plans.");
-        }
     }
 
     private async Task EnsureActiveGoalOwnedAsync(Guid userId, Guid goalId)

@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using FluentValidation;
 using RoutineFlow.BackgroundServices;
 using RoutineFlow.Common;
 using RoutineFlow.Data;
+using RoutineFlow.Filters;
 using RoutineFlow.Middleware;
 using RoutineFlow.Repositories;
 using RoutineFlow.Repositories.Interfaces;
@@ -16,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>());
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddProblemDetails(options =>
@@ -27,6 +29,9 @@ builder.Services.AddProblemDetails(options =>
             System.Diagnostics.Activity.Current?.Id ?? context.HttpContext.TraceIdentifier;
     };
 });
+
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+FluentValidation.ValidatorOptions.Global.LanguageManager.Enabled = false;
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>()
