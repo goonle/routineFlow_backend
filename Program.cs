@@ -24,6 +24,7 @@ var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>()
     ?? throw new InvalidOperationException("Jwt configuration section is missing.");
 
 builder.Services.Configure<WeeklyNotificationSettings>(builder.Configuration.GetSection("WeeklyNotification"));
+builder.Services.Configure<GoalRetentionSettings>(builder.Configuration.GetSection("GoalRetention"));
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
@@ -48,6 +49,8 @@ builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IWeeklySummaryService, WeeklySummaryService>();
 builder.Services.AddHostedService<WeeklyNotificationBackgroundService>();
+builder.Services.AddScoped<IGoalRetentionService, GoalRetentionService>();
+builder.Services.AddHostedService<GoalRetentionBackgroundService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

@@ -12,10 +12,17 @@ namespace RoutineFlow.Controllers;
 public class GoalsController : ControllerBase
 {
     private readonly IGoalService _goalService;
+    private readonly IGoalRetentionService _goalRetentionService;
+    private readonly IWebHostEnvironment _env;
 
-    public GoalsController(IGoalService goalService)
+    public GoalsController(
+        IGoalService goalService,
+        IGoalRetentionService goalRetentionService,
+        IWebHostEnvironment env)
     {
         _goalService = goalService;
+        _goalRetentionService = goalRetentionService;
+        _env = env;
     }
 
     [HttpGet]
@@ -65,5 +72,17 @@ public class GoalsController : ControllerBase
     {
         var goal = await _goalService.RestoreAsync(User.GetUserId(), id);
         return Ok(goal);
+    }
+
+    [HttpPost("retention/trigger")]
+    public async Task<IActionResult> TriggerRetention()
+    {
+        if (!_env.IsDevelopment())
+        {
+            return NotFound();
+        }
+
+        var result = await _goalRetentionService.RunAsync();
+        return Ok(result);
     }
 }

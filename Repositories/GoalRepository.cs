@@ -27,7 +27,14 @@ public class GoalRepository : IGoalRepository
     public Task<Goal?> GetByIdAsync(Guid userId, Guid goalId) =>
         _db.Goals.FirstOrDefaultAsync(g => g.Id == goalId && g.UserId == userId);
 
+    public Task<List<Goal>> GetSoftDeletedForRetentionScanAsync() =>
+        _db.Goals.Where(g => g.DeletedAt != null)
+            .OrderBy(g => g.DeletedAt)
+            .ToListAsync();
+
     public async Task AddAsync(Goal goal) => await _db.Goals.AddAsync(goal);
+
+    public void Remove(Goal goal) => _db.Goals.Remove(goal);
 
     public Task SaveChangesAsync() => _db.SaveChangesAsync();
 }
