@@ -19,4 +19,9 @@ public class CalendarRepository : ICalendarRepository
             .Select(c => new GoalAchievement(c.Task.GoalId, c.Date))
             .Distinct()
             .ToListAsync();
+
+    public Task<int> GetTotalCompletionCountAsync(Guid userId, DateOnly from, DateOnly to) =>
+        _db.TaskCompletions
+            .Where(c => c.Date >= from && c.Date <= to && c.Task.Goal.UserId == userId)
+            .SumAsync(c => c.Count);
 }

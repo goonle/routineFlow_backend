@@ -20,6 +20,9 @@ public class UserRepository : IUserRepository
     public Task<User?> GetByIdAsync(Guid id) =>
         _db.Users.FirstOrDefaultAsync(u => u.Id == id);
 
+    public Task<List<Guid>> GetAllIdsAsync() =>
+        _db.Users.Select(u => u.Id).ToListAsync();
+
     public async Task AddAsync(User user) => await _db.Users.AddAsync(user);
 
     public Task SaveChangesAsync() => _db.SaveChangesAsync();
