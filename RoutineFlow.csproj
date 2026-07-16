@@ -24,4 +24,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="RoutineFlow.IntegrationTests/**" />
+    <Content Remove="RoutineFlow.IntegrationTests/**" />
+    <None Remove="RoutineFlow.IntegrationTests/**" />
+    <EmbeddedResource Remove="RoutineFlow.IntegrationTests/**" />
+  </ItemGroup>
+
 </Project>

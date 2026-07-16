@@ -31,7 +31,7 @@ dotnet user-secrets set "ConnectionStrings:Default" "..."
 dotnet user-secrets set "Jwt:SigningKey" "..."
 ```
 
-There is no test project yet. There is no linter configured beyond the default Roslyn/.NET build warnings (`dotnet build` treats these as informational, not CI-enforced).
+`RoutineFlow.IntegrationTests` holds `WebApplicationFactory<Program>` + Testcontainers-Postgres integration tests (`dotnet test`) — a fresh disposable Postgres container per test run, migrated via `Database.MigrateAsync()`, with hosted `BackgroundServices` removed from the test host for determinism. There is no linter configured beyond the default Roslyn/.NET build warnings (`dotnet build` treats these as informational, not CI-enforced).
 
 ## Architecture
 
