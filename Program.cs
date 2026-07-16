@@ -39,6 +39,8 @@ builder.Services.AddScoped<ITaskCompletionRepository, TaskCompletionRepository>(
 builder.Services.AddScoped<ITaskCompletionService, TaskCompletionService>();
 builder.Services.AddScoped<IDailyReportRepository, DailyReportRepository>();
 builder.Services.AddScoped<IDailyReportService, DailyReportService>();
+builder.Services.AddScoped<ICalendarRepository, CalendarRepository>();
+builder.Services.AddScoped<ICalendarService, CalendarService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

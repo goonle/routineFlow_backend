@@ -17,6 +17,9 @@ public class DailyReportRepository : IDailyReportRepository
     public Task<DailyReport?> GetByUserAndDateAsync(Guid userId, DateOnly date) =>
         _db.DailyReports.FirstOrDefaultAsync(d => d.UserId == userId && d.Date == date);
 
+    public Task<List<DailyReport>> GetByUserAndRangeAsync(Guid userId, DateOnly from, DateOnly to) =>
+        _db.DailyReports.Where(d => d.UserId == userId && d.Date >= from && d.Date <= to).ToListAsync();
+
     public async Task AddAsync(DailyReport report) => await _db.DailyReports.AddAsync(report);
 
     public Task SaveChangesAsync() => _db.SaveChangesAsync();
