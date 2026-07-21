@@ -69,6 +69,8 @@ public class CalendarService : ICalendarService
                     Name = g.Name,
                     Icon = g.Icon,
                     Emoji = GoalIconMetadata.Emoji(g.Icon),
+                    Color = g.Color,
+                    ColorHex = GoalColorMetadata.Hex(g.Color),
                     Achieved = achievedSet.Contains((g.Id, date))
                 }).ToList()
             });

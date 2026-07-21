@@ -44,6 +44,7 @@ public class GoalService : IGoalService
             Name = request.Name,
             Description = request.Description,
             Icon = request.Icon,
+            Color = request.Color,
             CreatedAt = now,
             UpdatedAt = now
         };
@@ -61,6 +62,7 @@ public class GoalService : IGoalService
         goal.Name = request.Name;
         goal.Description = request.Description;
         goal.Icon = request.Icon;
+        goal.Color = request.Color;
         goal.UpdatedAt = DateTime.UtcNow;
 
         await _goalRepository.SaveChangesAsync();
@@ -113,6 +115,8 @@ public class GoalService : IGoalService
         Description = goal.Description,
         Icon = goal.Icon,
         Emoji = GoalIconMetadata.Emoji(goal.Icon),
+        Color = goal.Color,
+        ColorHex = GoalColorMetadata.Hex(goal.Color),
         CreatedAt = goal.CreatedAt,
         UpdatedAt = goal.UpdatedAt,
         DeletedAt = goal.DeletedAt

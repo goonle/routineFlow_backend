@@ -9,6 +9,7 @@ public class Goal
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
     public GoalIcon Icon { get; set; } = GoalIcon.General;
+    public GoalColor Color { get; set; } = GoalColor.Red;
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 

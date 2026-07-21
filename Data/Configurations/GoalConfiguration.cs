@@ -12,6 +12,7 @@ public class GoalConfiguration : IEntityTypeConfiguration<Goal>
         builder.HasKey(g => g.Id);
         builder.Property(g => g.Name).IsRequired();
         builder.Property(g => g.Icon).IsRequired().HasDefaultValue(GoalIcon.General);
+        builder.Property(g => g.Color).IsRequired().HasDefaultValue(GoalColor.Red);
         builder.HasIndex(g => g.UserId);
 
         builder.HasMany(g => g.Tasks)
